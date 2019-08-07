@@ -1,0 +1,4 @@
+/CSharp/HttpWorker/.vs/*
+/CSharp/HttpWorker/CSharpHttpWorker/bin/*
+/CSharp/HttpWorker/CSharpHttpWorker/obj/*
+/CSharp/HttpWorker/CSharpHttpWorker/CSharpHttpWorker.csproj.user
