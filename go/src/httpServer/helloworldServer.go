@@ -12,15 +12,15 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "%s %s %s \n", r.Method, r.URL, r.Proto)
+    //fmt.Fprintf(w, "%s %s %s \n", r.Method, r.URL, r.Proto)
     //Iterate over all header fields
-    for k, v := range r.Header {
-        fmt.Fprintf(w, "Header field %q, Value %q\n", k, v)
-    }
+    //for k, v := range r.Header {
+    //    fmt.Fprintf(w, "Header field %q, Value %q\n", k, v)
+    //}
 
-    fmt.Fprintf(w, "Host = %q\n", r.Host)
-    fmt.Fprintf(w, "RemoteAddr= %q\n", r.RemoteAddr)
+    //fmt.Fprintf(w, "Host = %q\n", r.Host)
+    //fmt.Fprintf(w, "RemoteAddr= %q\n", r.RemoteAddr)
     //Get value for a specified token
-    fmt.Fprintf(w, "\n\nFinding value of \"myQueueItem\" %q", r.Header["myQueueItem"])
+    fmt.Fprintf(w, "Go HttpServer of Myqueueitem", r.Header["Myqueueitem"])
     w.Write([]byte("HTTP status code returned!"))
 }
