@@ -2,3 +2,4 @@
 /CSharp/HttpWorker/CSharpHttpWorker/bin/*
 /CSharp/HttpWorker/CSharpHttpWorker/obj/*
 /CSharp/HttpWorker/CSharpHttpWorker/CSharpHttpWorker.csproj.user
+/go/src/httpServer/helloworldServer.exe
