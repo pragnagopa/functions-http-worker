@@ -16,12 +16,20 @@ func queueTriggerHandler(w http.ResponseWriter, r *http.Request) {
     //fmt.Fprintf(w, "Host = %q\n", r.Host)
     //fmt.Fprintf(w, "RemoteAddr= %q\n", r.RemoteAddr)
     //Get value for a specified token
-    fmt.Fprintf(w, "Go HttpServer of Myqueueitem", r.Header["Myqueueitem"])
-    w.Write([]byte("HTTP status code returned!"))
+    //fmt.Fprintf(w, "Go HttpServer of Myqueueitem", r.Header["Myqueueitem"])
+    queueItemArray := r.Header["Myqueueitem"]
+    queueItem := ""
+    for _, element := range queueItemArray {
+        // index is the index where we are
+        // element is the element from someSlice for where we are
+        queueItem = queueItem + element
+    }
+    w.Write([]byte("Go server returning Myqueueitem: " + queueItem))
   }
   
   func httpTriggerHandler(w http.ResponseWriter, r *http.Request) {
     queryParamName := r.URL.Query().Get("name")
+    
 	w.Write([]byte("Hello World from go worker:" + queryParamName))
   }
 

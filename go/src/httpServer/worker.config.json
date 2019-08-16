@@ -1,7 +1,6 @@
 {
     "description":{
         "language":"go",
-        "extensions":[".go"],
         "defaultExecutablePath":"helloworldServer.exe"
     }
 }
