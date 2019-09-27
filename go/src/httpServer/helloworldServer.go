@@ -10,7 +10,7 @@ type ReturnValue struct {
     Data string
 }
 type InvokeResponse struct {
-    Outputs  map[string]interface{}
+  Outputs  map[string]interface{}
 	Logs []string
 	ReturnValue
 }
@@ -59,6 +59,11 @@ func queueTriggerHandler(w http.ResponseWriter, r *http.Request) {
     fmt.Println(t.Month())
     fmt.Println(t.Day())
     fmt.Println(t.Year())
+    ua := r.Header.Get("User-Agent")
+    fmt.Printf("user agent is: %s \n", ua)
+    invocationid := r.Header.Get("X-Azure-Functions-InvocationId")
+    fmt.Printf("invocationid is: %s \n", invocationid)
+          
     //w.Write([]byte("Hello World from go worker:pgopa"))
     returnValue := ReturnValue{Data:"return val"}
 	outputs := make(map[string]interface{})
