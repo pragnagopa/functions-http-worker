@@ -5,6 +5,8 @@ import (
     "net/http"
     "time"
     "encoding/json"
+    "os"
+    "flag"
 )
 type ReturnValue struct {
     Data string
@@ -104,11 +106,24 @@ func queueTriggerHandler(w http.ResponseWriter, r *http.Request) {
   }
 
 func main() {
+  argsWithProg := os.Args
+  argsWithoutProg := os.Args[1:]
+  //arg := os.Args[3]
+  fmt.Println(argsWithProg)
+  fmt.Println(argsWithoutProg)
+  
+  //args := flag.Args()
+  var httpInvokerPort string
+    flag.StringVar(&httpInvokerPort, "httpInvokerPort", "", "Usage")
+
+    flag.Parse()
+
+    fmt.Println(httpInvokerPort)
     mux := http.NewServeMux()
     mux.HandleFunc("/HttpTrigger", httpTriggerHandler)
     mux.HandleFunc("/QueueTrigger", queueTriggerHandler)
     mux.HandleFunc("/SimpleHttpTrigger", simpleHttpTriggerHandler)
     mux.HandleFunc("/SimpleHttpTriggerWithReturn", simpleHttpTriggerHandler)
-    log.Println("Go server Listening...")
-    log.Fatal(http.ListenAndServe(":8090", mux))
+    log.Println("Go server Listening...on httpInvokerPort:", httpInvokerPort)
+    log.Fatal(http.ListenAndServe(":" + httpInvokerPort, mux))
 }
