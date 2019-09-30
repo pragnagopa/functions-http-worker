@@ -84,10 +84,31 @@ func queueTriggerHandler(w http.ResponseWriter, r *http.Request) {
   w.Write(js)
   }
 
+  func simpleHttpTriggerHandler(w http.ResponseWriter, r *http.Request) {
+    t := time.Now()
+    fmt.Println(t.Month())
+    fmt.Println(t.Day())
+    fmt.Println(t.Year())
+    ua := r.Header.Get("User-Agent")
+    fmt.Printf("user agent is: %s \n", ua)
+    invocationid := r.Header.Get("X-Azure-Functions-InvocationId")
+    fmt.Printf("invocationid is: %s \n", invocationid)
+
+    queryParams := r.URL.Query()
+
+    for k, v := range queryParams {
+      fmt.Println("k:", k, "v:", v)
+    }
+          
+   w.Write([]byte("Hello World from go worker:pgopa"))
+  }
+
 func main() {
     mux := http.NewServeMux()
     mux.HandleFunc("/HttpTrigger", httpTriggerHandler)
     mux.HandleFunc("/QueueTrigger", queueTriggerHandler)
+    mux.HandleFunc("/SimpleHttpTrigger", simpleHttpTriggerHandler)
+    mux.HandleFunc("/SimpleHttpTriggerWithReturn", simpleHttpTriggerHandler)
     log.Println("Go server Listening...")
     log.Fatal(http.ListenAndServe(":8090", mux))
 }
