@@ -1,0 +1,8 @@
+{
+	"version": "2.0",
+	"httpInvoker": {
+		"description": {
+			"defaultExecutablePath": "helloworldServer.exe"
+		}
+	}
+}

@@ -3,3 +3,6 @@
 /CSharp/HttpWorker/CSharpHttpWorker/obj/*
 /CSharp/HttpWorker/CSharpHttpWorker/CSharpHttpWorker.csproj.user
 /go/src/httpServer/helloworldServer.exe
+/node/node_modules/*
+/go/functions/go/*.exe
+/functions/*.exe
