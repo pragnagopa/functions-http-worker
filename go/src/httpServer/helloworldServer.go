@@ -6,7 +6,7 @@ import (
     "time"
     "encoding/json"
     "os"
-    "flag"
+    //"flag"
 )
 type ReturnValue struct {
     Data string
@@ -106,19 +106,25 @@ func queueTriggerHandler(w http.ResponseWriter, r *http.Request) {
   }
 
 func main() {
+  /* Parsing command line args
   argsWithProg := os.Args
   argsWithoutProg := os.Args[1:]
-  //arg := os.Args[3]
   fmt.Println(argsWithProg)
   fmt.Println(argsWithoutProg)
   
   //args := flag.Args()
-  var httpInvokerPort string
+    var httpInvokerPort string
     flag.StringVar(&httpInvokerPort, "httpInvokerPort", "", "Usage")
 
     flag.Parse()
 
     fmt.Println(httpInvokerPort)
+    */
+    httpInvokerPort, exists := os.LookupEnv("FUNCTIONS_WORKER_PORT")
+    if exists {
+      // Print the value of the environment variable
+    fmt.Println("FUNCTIONS_WORKER_PORT: "+httpInvokerPort)
+    }
     mux := http.NewServeMux()
     mux.HandleFunc("/HttpTrigger", httpTriggerHandler)
     mux.HandleFunc("/QueueTrigger", queueTriggerHandler)
