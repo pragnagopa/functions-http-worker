@@ -6,3 +6,6 @@
 /node/node_modules/*
 /go/functions/go/*.exe
 /functions/*.exe
+/functions/bin/*
+/functions/*.csproj
+/functions/obj/*

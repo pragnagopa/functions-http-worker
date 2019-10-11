@@ -14,7 +14,7 @@ type ReturnValue struct {
 type InvokeResponse struct {
   Outputs  map[string]interface{}
 	Logs []string
-	ReturnValue
+	ReturnValue interface{}
 }
 
 type InvokeRequest struct {
@@ -37,14 +37,8 @@ func queueTriggerHandler(w http.ResponseWriter, r *http.Request) {
     fmt.Println(invokeReq.Data)
     
 
-   returnValue := ReturnValue{Data:"HelloWorld"}
-	outputs := make(map[string]interface{})
-    outputs["output"] = "output from go"
-    outputs["output2"] = map[string]interface{}{
-    "home": "123-466-799",
-    "office": "564-987-654",
-    }
-    invokeResponse := InvokeResponse{outputs, []string{"test log1", "test log2"},returnValue}
+   returnValue := "HelloWorld"
+   invokeResponse := InvokeResponse{Logs: []string{"test log1", "test log2"},ReturnValue:returnValue}
 
   js, err := json.Marshal(invokeResponse)
   if err != nil {
@@ -54,6 +48,37 @@ func queueTriggerHandler(w http.ResponseWriter, r *http.Request) {
 
   w.Header().Set("Content-Type", "application/json")
   w.Write(js)
+}
+
+func queueTriggerWithOutputsHandler(w http.ResponseWriter, r *http.Request) {
+  var invokeReq InvokeRequest
+  d := json.NewDecoder(r.Body)
+  decodeErr := d.Decode(&invokeReq)
+  if decodeErr != nil {
+  // bad JSON or unrecognized json field
+  http.Error(w, decodeErr.Error(), http.StatusBadRequest)
+  return
+  }
+  fmt.Println("The JSON data is:invokeReq metadata......")
+  fmt.Println(invokeReq.Metadata)
+  fmt.Println("The JSON data is:invokeReq data......")
+  fmt.Println(invokeReq.Data)
+  
+
+ returnValue := 100
+outputs := make(map[string]interface{})
+  outputs["output1"] = "output from go"
+  
+  invokeResponse := InvokeResponse{outputs, []string{"test log1", "test log2"},returnValue}
+
+js, err := json.Marshal(invokeResponse)
+if err != nil {
+  http.Error(w, err.Error(), http.StatusInternalServerError)
+  return
+}
+
+w.Header().Set("Content-Type", "application/json")
+w.Write(js)
 }
   
   func httpTriggerHandler(w http.ResponseWriter, r *http.Request) {
@@ -128,6 +153,7 @@ func main() {
     mux := http.NewServeMux()
     mux.HandleFunc("/HttpTrigger", httpTriggerHandler)
     mux.HandleFunc("/QueueTrigger", queueTriggerHandler)
+    mux.HandleFunc("/QueueTriggerWithOutputs", queueTriggerWithOutputsHandler)
     mux.HandleFunc("/SimpleHttpTrigger", simpleHttpTriggerHandler)
     mux.HandleFunc("/SimpleHttpTriggerWithReturn", simpleHttpTriggerHandler)
     log.Println("Go server Listening...on httpInvokerPort:", httpInvokerPort)

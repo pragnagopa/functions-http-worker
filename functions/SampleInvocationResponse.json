@@ -2,8 +2,10 @@
 	"Outputs": {
 		"output1": "hello queue out1"
 	},
-	"Logs": ["invocation log1",
+	"Logs": [
+	"invocation log1",
 	"invocation log2",
-	"invocation log3"],
+	"invocation log3"
+	],
 	"ReturnValue": "hello queue out"
 }
