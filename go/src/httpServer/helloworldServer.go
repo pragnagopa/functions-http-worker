@@ -50,6 +50,32 @@ func queueTriggerHandler(w http.ResponseWriter, r *http.Request) {
   w.Write(js)
 }
 
+func blobTriggerHandler(w http.ResponseWriter, r *http.Request) {
+  var invokeReq InvokeRequest
+  d := json.NewDecoder(r.Body)
+  decodeErr := d.Decode(&invokeReq)
+  if decodeErr != nil {
+  // bad JSON or unrecognized json field
+  http.Error(w, decodeErr.Error(), http.StatusBadRequest)
+  return
+  }
+  fmt.Println("The JSON data is:invokeReq metadata......")
+  fmt.Println(invokeReq.Metadata)
+   
+
+ returnValue := invokeReq.Data["triggerBlob"]
+ invokeResponse := InvokeResponse{Logs: []string{"test log1", "test log2"},ReturnValue:returnValue}
+
+js, err := json.Marshal(invokeResponse)
+if err != nil {
+  http.Error(w, err.Error(), http.StatusInternalServerError)
+  return
+}
+
+w.Header().Set("Content-Type", "application/json")
+w.Write(js)
+}
+
 func queueTriggerWithOutputsHandler(w http.ResponseWriter, r *http.Request) {
   var invokeReq InvokeRequest
   d := json.NewDecoder(r.Body)
@@ -131,28 +157,14 @@ w.Write(js)
   }
 
 func main() {
-  /* Parsing command line args
-  argsWithProg := os.Args
-  argsWithoutProg := os.Args[1:]
-  fmt.Println(argsWithProg)
-  fmt.Println(argsWithoutProg)
-  
-  //args := flag.Args()
-    var httpInvokerPort string
-    flag.StringVar(&httpInvokerPort, "httpInvokerPort", "", "Usage")
-
-    flag.Parse()
-
-    fmt.Println(httpInvokerPort)
-    */
-    httpInvokerPort, exists := os.LookupEnv("FUNCTIONS_WORKER_PORT")
+    httpInvokerPort, exists := os.LookupEnv("FUNCTIONS_HTTPWORKER_PORT")
     if exists {
-      // Print the value of the environment variable
-    fmt.Println("FUNCTIONS_WORKER_PORT: "+httpInvokerPort)
+    fmt.Println("FUNCTIONS_HTTPWORKER_PORT: "+httpInvokerPort)
     }
     mux := http.NewServeMux()
     mux.HandleFunc("/HttpTrigger", httpTriggerHandler)
     mux.HandleFunc("/QueueTrigger", queueTriggerHandler)
+    mux.HandleFunc("/BlobTrigger", blobTriggerHandler)
     mux.HandleFunc("/QueueTriggerWithOutputs", queueTriggerWithOutputsHandler)
     mux.HandleFunc("/SimpleHttpTrigger", simpleHttpTriggerHandler)
     mux.HandleFunc("/SimpleHttpTriggerWithReturn", simpleHttpTriggerHandler)

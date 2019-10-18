@@ -9,3 +9,4 @@
 /functions/bin/*
 /functions/*.csproj
 /functions/obj/*
+/CSharp/HttpWorker/CSharpHttpWorker/Properties/PublishProfiles/*

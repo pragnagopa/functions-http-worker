@@ -4,7 +4,7 @@
       "name": "myQueueItem",
       "type": "queueTrigger",
       "direction": "in",
-      "queueName": "test-input-node",
+      "queueName": "test-inputmultiout-node",
       "connection": "AzureWebJobsStorage"
     },
     {

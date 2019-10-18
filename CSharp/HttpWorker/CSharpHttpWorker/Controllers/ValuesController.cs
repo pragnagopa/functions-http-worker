@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CSharpHttpWorker.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
@@ -35,8 +35,11 @@ namespace CSharpHttpWorker.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<string> Post(string value)
         {
+            var invocationRequest = this.HttpContext;
+            _logger.LogInformation($"queryparam:{invocationRequest.Request.Query["name"]}");
+            return "HelloWorld";
         }
 
         // PUT api/values/5
