@@ -1,0 +1,9 @@
+{
+	"version": "2.0",
+	"httpWorker": {
+		"description": {
+			"defaultExecutablePath": "RScript",
+			"defaultWorkerPath": "rserver.R"
+		}
+	}
+}
