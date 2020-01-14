@@ -12,6 +12,7 @@ namespace CSharpHttpWorker
 {
     public class Program
     {
+        public static string FUNCTIONS_HTTPWORKER_PORT = Environment.GetEnvironmentVariable("FUNCTIONS_HTTPWORKER_PORT") ?? "9080";
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
@@ -19,6 +20,7 @@ namespace CSharpHttpWorker
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseUrls($"http://localhost:{FUNCTIONS_HTTPWORKER_PORT}");
     }
 }
