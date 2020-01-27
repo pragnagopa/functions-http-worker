@@ -4,7 +4,7 @@ Write HTTP APIs in a given language, then you can now write functions in that la
 
 ## Getting Started
 
--	You just need a recent version of Functions and core tools, and you have everything you need, outside of any dependencies your target language requires.
+-	You need a functions version [2.0.12961](https://github.com/Azure/azure-functions-host/releases/tag/v2.0.12961) or higher.
 -	The core of a handler is being able to write something that can receive a POST over http://127.0.0.1:port/functionName according to this request schema and response schema.
 -	The FUNCTIONS_HTTPWORKER_PORT environment variable defines the port.
 -	Beyond writing the handler against that schema, you’ll need to set the executable path and possibly a worker path (as in JS) in host.json.
