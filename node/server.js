@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 app.use(express.json());
 
-const port = process.env.FUNCTIONS_WORKER_PORT;
+const port = process.env.FUNCTIONS_HTTPWORKER_PORT;
    
 app.all('/SimpleHttpTrigger', function (req, res) {
    console.log(`Got a POST request for the homepage. Query Params are:`);
@@ -44,7 +44,7 @@ app.post('/QueueTriggerWithOutputs', function (req, res) {
 })
 
 var server = app.listen(port, 'localhost', function () {
-   console.log(`Your port is ${process.env.FUNCTIONS_WORKER_PORT}`);
+   console.log(`Your port is ${process.env.FUNCTIONS_HTTPWORKER_PORT}`);
    var host = server.address().address
    var port = server.address().port
    
